@@ -106,7 +106,7 @@
             letter-spacing: 0.3px;
         }
 
-        /* toggle开关（模拟checkbox的switch风格） */
+        /* toggle开关 */
         .switch {
             position: relative;
             display: inline-block;
@@ -146,7 +146,6 @@
 
         input:checked + .slider {
             background-color: #ef4444;
-            /* 屏蔽状态用红色醒目 */
         }
 
         input:checked + .slider:before {
@@ -225,7 +224,6 @@
             padding: 0.25rem 0.75rem;
             border-radius: 40px;
             letter-spacing: 0.3px;
-            transition: all 0.1s;
             display: inline-block;
         }
 
@@ -240,67 +238,129 @@
             margin-bottom: 2rem;
         }
 
-        /* 赞助码区域 */
+        /* 赞助区域 - 下拉菜单样式 */
         .support-section {
             margin-top: 2rem;
-            padding: 2rem 1rem 1.8rem;
             background: white;
             border-radius: 1.5rem;
-            text-align: center;
             border: 1px solid #eef2f6;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            overflow: hidden;
         }
 
-        .support-title {
-            font-size: 0.95rem;
+        /* 下拉菜单触发器按钮 */
+        .support-dropdown-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #fef9e3, #fff6e0);
+            border: none;
+            padding: 1.2rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #b45309;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #ffe6b3;
+        }
+
+        .support-dropdown-btn:hover {
+            background: linear-gradient(135deg, #fef3cf, #fff0d4);
+        }
+
+        .support-dropdown-btn span:first-child {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .support-dropdown-btn span:first-child::before {
+            content: "💖";
+            font-size: 1.2rem;
+        }
+
+        .arrow-icon {
+            transition: transform 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .support-dropdown-btn.open .arrow-icon {
+            transform: rotate(180deg);
+        }
+
+        /* 下拉内容面板 (初始隐藏) */
+        .support-dropdown-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+        }
+
+        .support-dropdown-content.show {
+            max-height: 380px; /* 足够展示两个赞助码 */
+        }
+
+        .support-inner {
+            padding: 1.8rem 1.5rem 2rem;
+            text-align: center;
+        }
+
+        .support-motivation {
+            font-size: 0.9rem;
             font-weight: 500;
-            color: #334155;
-            margin-bottom: 1.2rem;
-            letter-spacing: 1px;
-            background: #fef9e3;
+            color: #9b4a1a;
+            background: #fff7e6;
             display: inline-block;
-            padding: 0.3rem 1.2rem;
+            padding: 0.4rem 1.2rem;
             border-radius: 40px;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
         }
 
         .sponsor-codes {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 2rem;
+            gap: 2.5rem;
             align-items: flex-start;
         }
 
         .sponsor-item {
             text-align: center;
-            width: 110px;
+            width: 120px;
         }
 
         .sponsor-img {
-            width: 80px;
-            height: 80px;
-            background: #f1f5f9;
-            border-radius: 16px;
+            width: 100px;
+            height: 100px;
+            background: #f8fafc;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 0.5rem;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-            transition: 0.1s;
+            margin: 0 auto 0.65rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s;
             overflow: hidden;
-            border: 1px solid #e2e8f0;
+            border: 1px solid #e9edf2;
+        }
+
+        .sponsor-img:hover {
+            transform: scale(1.02);
         }
 
         .sponsor-img img {
             width: 100%;
             height: 100%;
             object-fit: contain;
+            padding: 8px;
         }
 
         .sponsor-label {
-            font-size: 0.7rem;
-            color: #475569;
-            margin-top: 0.25rem;
+            font-size: 0.75rem;
+            color: #5b6e8c;
+            margin-top: 0.3rem;
             font-weight: 500;
         }
 
@@ -308,9 +368,9 @@
             font-size: 0.7rem;
             color: #94a3b8;
             text-align: center;
-            margin-top: 1rem;
-            border-top: 1px solid #eef2f6;
-            padding-top: 1rem;
+            margin-top: 1.2rem;
+            padding-top: 0.8rem;
+            border-top: 1px solid #f0f2f5;
         }
 
         @media (max-width: 640px) {
@@ -326,27 +386,37 @@
             .switch-item {
                 padding: 0.3rem 0.8rem 0.3rem 0.7rem;
             }
+            .sponsor-img {
+                width: 80px;
+                height: 80px;
+            }
+            .sponsor-codes {
+                gap: 1.5rem;
+            }
+            .support-inner {
+                padding: 1.2rem 1rem;
+            }
         }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="header">
-        <h1>视频集合</h1>
+        <h1>KHCN视频合集</h1>
         <div class="sub">此网站还在优化中.....</div>
     </div>
 
-    <!-- 固定标签过滤器区域：显示三个固定标签及开关 (标签内容可自行修改，但用户无法在界面上修改标签名称) -->
+    <!-- 固定标签过滤器区域：显示三个固定标签及开关 -->
     <div class="filter-panel">
         <div class="filter-title">
-             标签屏蔽开关
+            标签屏蔽开关
             <span>开启后将隐藏包含该标签的所有视频</span>
         </div>
         <div class="tags-switch-container" id="tagsSwitchContainer">
-            <!-- 动态生成三个标签对应的开关，内容由下方 tagOptions 决定 (用户改js常量即可) -->
+            <!-- 动态生成三个标签对应的开关 -->
         </div>
         <div class="switch-note" style="margin-top: 12px; font-size: 0.7rem;">
-             开关状态即屏蔽对应标签的作品
+            开关状态即屏蔽对应标签的作品 | 每个视频卡片下展示所属标签
         </div>
     </div>
 
@@ -355,42 +425,43 @@
         <!-- 动态渲染视频卡片 -->
     </div>
 
-    <!-- 赞助码区域 (两个码，文字图片小巧) -->
+    <!-- 赞助区 - 下拉菜单版本: 点击按钮才会弹出赞助码 -->
     <div class="support-section">
-        <div class="support-title">💖 您的支持是我更新的最大动力</div>
-        <div class="sponsor-codes">
-            <div class="sponsor-item">
-                <div class="sponsor-img">
-                    <!-- 占位赞助码图片1，用户可替换为自己的图片地址 (建议尺寸80x80) -->
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Crect width='80' height='80' fill='%23f1f5f9'/%3E%3Ctext x='50%25' y='50%25' font-size='12' fill='%233b82f6' text-anchor='middle' dy='.3em' font-family='monospace'%3E赞 助 码%3C/text%3E%3C/svg%3E" alt="赞助码1">
+        <button class="support-dropdown-btn" id="supportDropdownBtn">
+            <span>您的支持是我更新的最大动力</span>
+            <span class="arrow-icon">▼</span>
+        </button>
+        <div class="support-dropdown-content" id="supportDropdownContent">
+            <div class="support-inner">
+                <div class="support-motivation">请量力而行，感谢您的每一份支持</div>
+                <div class="sponsor-codes">
+                    <div class="sponsor-item">
+                        <div class="sponsor-img">
+                            <!-- 赞助码图片1 (可自行替换图片地址，小巧精致) -->
+                            <img src="" alt="微信赞助码">
+                        </div>
+                        <div class="sponsor-label">❤️ 微信支持</div>
+                    </div>
+                    <div class="sponsor-item">
+                        <div class="sponsor-img">
+                            <!-- 赞助码图片2 -->
+                            <img src="' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23eef2ff' rx='16'/%3E%3Cpath d='M50 25 L65 40 L50 55 L35 40 Z' fill='%233b82f6'/%3E%3Ctext x='50' y='75' font-size='12' fill='%231e3a8a' text-anchor='middle' font-weight='bold'%3E支付宝%3C/text%3E%3C/svg%3E" alt="支付宝赞助码">
+                        </div>
+                        <div class="sponsor-label">💎 支付宝助力</div>
+                    </div>
                 </div>
-                <div class="sponsor-label">微信支持</div>
             </div>
-            <div class="sponsor-item">
-                <div class="sponsor-img">
-                    <!-- 占位赞助码图片2 -->
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Crect width='80' height='80' fill='%23f1f5f9'/%3E%3Ctext x='50%25' y='50%25' font-size='12' fill='%23ef4444' text-anchor='middle' dy='.3em' font-family='monospace'%3E爱 心 码%3C/text%3E%3C/svg%3E" alt="赞助码2">
-                </div>
-                <div class="sponsor-label">支付宝助力</div>
-            </div>
-        </div>
-        <div class="footer-note">
-            🧡 请量力而行，感谢您每一份鼓励
         </div>
     </div>
 </div>
 
 <script>
     // ======================= 用户可修改区域 =======================
-    // ★ 1. 固定三个标签的内容 (自行修改标签名称即可，网页内不可编辑)
-    //    修改下方数组即可改变页面上显示的三个标签文字，同时会影响视频过滤类别。
+    // ★ 固定三个标签的内容 (自行修改标签名称即可，网页内不可编辑)
     const TAG_LIST = ["粪", "尿"];
-    // 注意：视频数据中的tags必须与TAG_LIST里的字符串完全匹配，才能正常过滤。
-    // 示例里已经做了适配，如果您修改了标签文字，请同步修改下面视频里的tags。
     
-    // ★ 2. 视频作品数据（可自由增删、修改视频链接及标签）
-    //    每个视频包含: 标题, 视频链接(建议用可直接播放的mp4链接, 或者替换成自己的视频地址), 标签数组(必须是TAG_LIST中的子集)
-    //    当前展示6个示例作品，替换时请保持视频链接有效即可。
+    // ★ 视频作品数据（可自由增删、修改视频链接及标签）
+    //    注意：视频的标签必须与TAG_LIST中的字符串完全匹配。
     const VIDEOS_DATA = [
         {
             id: 1,
@@ -429,13 +500,11 @@
             tags: [""]
         }
     ];
-    // 提醒：若您需要替换为自己的视频，只需修改 videoUrl 字段，建议使用 mp4 格式直链。
-    // 标签内容必须与 TAG_LIST 完全一致（大小写敏感）。如需增加视频，按格式添加即可。
     // =============================================================
 
-    // 状态存储: 每个标签是否被屏蔽 (key: 标签名, value: true/false)
+    // 状态存储: 每个标签是否被屏蔽
     let blockedTags = {};
-    // 初始化屏蔽对象，默认全部不屏蔽
+    
     function initBlockedTags() {
         const newBlocked = {};
         TAG_LIST.forEach(tag => {
@@ -445,17 +514,19 @@
     }
     blockedTags = initBlockedTags();
 
-    // 获取DOM元素
     const tagsSwitchContainer = document.getElementById('tagsSwitchContainer');
     const videoListContainer = document.getElementById('videoListContainer');
+    
+    // 赞助下拉菜单相关元素
+    const supportBtn = document.getElementById('supportDropdownBtn');
+    const supportContent = document.getElementById('supportDropdownContent');
 
-    // 渲染开关区域 (基于TAG_LIST生成不可修改标签内容的开关, 但可以切换屏蔽状态)
+    // 渲染开关区域 (基于TAG_LIST生成不可修改标签内容的开关)
     function renderSwitches() {
         if (!tagsSwitchContainer) return;
         tagsSwitchContainer.innerHTML = '';
         TAG_LIST.forEach(tag => {
             const isBlocked = blockedTags[tag] || false;
-            // 构建开关卡片
             const switchItem = document.createElement('div');
             switchItem.className = 'switch-item';
             
@@ -463,7 +534,6 @@
             labelSpan.className = 'switch-label';
             labelSpan.textContent = tag;
             
-            // 开关组件
             const labelSwitch = document.createElement('label');
             labelSwitch.className = 'switch';
             const checkbox = document.createElement('input');
@@ -475,11 +545,9 @@
             labelSwitch.appendChild(checkbox);
             labelSwitch.appendChild(sliderSpan);
             
-            // 事件监听
             checkbox.addEventListener('change', (e) => {
                 const tagName = e.target.getAttribute('data-tag');
                 blockedTags[tagName] = e.target.checked;
-                // 刷新视频列表
                 renderVideoGrid();
             });
             
@@ -489,10 +557,9 @@
         });
     }
 
-    // 判断一个视频是否应该被屏蔽 (根据当前屏蔽标签)
+    // 判断一个视频是否被屏蔽
     function isVideoBlocked(video) {
         if (!video.tags || video.tags.length === 0) return false;
-        // 如果视频包含任何一个被屏蔽的标签，则屏蔽该视频
         for (let tag of video.tags) {
             if (blockedTags[tag] === true) {
                 return true;
@@ -504,7 +571,6 @@
     // 渲染视频网格
     function renderVideoGrid() {
         if (!videoListContainer) return;
-        // 过滤需要展示的视频
         const visibleVideos = VIDEOS_DATA.filter(video => !isVideoBlocked(video));
         
         if (visibleVideos.length === 0) {
@@ -517,10 +583,8 @@
             return;
         }
         
-        // 生成卡片HTML
         let cardsHtml = '';
         visibleVideos.forEach(video => {
-            // 生成标签徽章html
             let tagsHtml = '';
             if (video.tags && video.tags.length) {
                 tagsHtml = `<div class="tags-list">${video.tags.map(tag => `<span class="tag-badge">${escapeHtml(tag)}</span>`).join('')}</div>`;
@@ -528,13 +592,11 @@
                 tagsHtml = `<div class="tags-list"><span class="tag-badge" style="background:#f1f5f9;color:#5b6e8c;">无标签</span></div>`;
             }
             
-            // 视频源处理 (提供多种后备属性)
-            const videoSrc = video.videoUrl || '';
             cardsHtml += `
                 <div class="video-card" data-id="${video.id}">
                     <div class="video-wrapper">
                         <video controls preload="metadata" poster="">
-                            <source src="${escapeHtml(videoSrc)}" type="video/mp4">
+                            <source src="${escapeHtml(video.videoUrl)}" type="video/mp4">
                             您的浏览器不支持 video 标签。
                         </video>
                     </div>
@@ -547,25 +609,23 @@
         });
         videoListContainer.innerHTML = cardsHtml;
         
-        // 可选: 为每个video元素添加错误回退提示（静默处理加载失败，不影响体验）
+        // 添加视频加载错误提示（不影响核心体验）
         const videos = videoListContainer.querySelectorAll('video');
         videos.forEach(vid => {
             vid.addEventListener('error', () => {
-                // 如果加载失败，提示简洁但不破坏布局，可以选择显示占位文字，但保持优雅
                 if (!vid.hasAttribute('data-error-logged')) {
                     vid.setAttribute('data-error-logged', 'true');
-                    // 创建一个小提示浮层或者静默，这里为了友好，加透明提示但不干扰
                     const parent = vid.closest('.video-wrapper');
                     if (parent && !parent.querySelector('.error-badge')) {
                         const errSpan = document.createElement('div');
                         errSpan.className = 'error-badge';
-                        errSpan.textContent = '⚠️ 视频无法加载，请检查链接';
+                        errSpan.textContent = '⚠️ 视频链接失效，可自行替换';
                         errSpan.style.position = 'absolute';
                         errSpan.style.bottom = '8px';
                         errSpan.style.left = '8px';
-                        errSpan.style.background = 'rgba(0,0,0,0.6)';
-                        errSpan.style.color = '#fff';
-                        errSpan.style.fontSize = '11px';
+                        errSpan.style.background = 'rgba(0,0,0,0.65)';
+                        errSpan.style.color = '#ffcf9a';
+                        errSpan.style.fontSize = '10px';
                         errSpan.style.padding = '2px 8px';
                         errSpan.style.borderRadius = '20px';
                         errSpan.style.zIndex = '2';
@@ -576,7 +636,6 @@
         });
     }
     
-    // 简单的防XSS辅助函数
     function escapeHtml(str) {
         if (!str) return '';
         return str.replace(/[&<>]/g, function(m) {
@@ -584,23 +643,51 @@
             if (m === '<') return '&lt;';
             if (m === '>') return '&gt;';
             return m;
-        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
-            return c;
         });
     }
     
-    // 额外：确保用户不能在界面上编辑标签内容 (无任何输入框可修改标签，符合需求)
-    // 另外也需要保证“固定标签”在界面中以只读形式展示（开关区域的文字只能看到标签，不可修改）
-    // 视频卡片标签也是静态展示不可编辑，完美符合。
+    // 赞助下拉菜单交互: 点击按钮展开/收起，点击外部可关闭 (优化体验)
+    function initSponsorDropdown() {
+        if (!supportBtn || !supportContent) return;
+        
+        const toggleDropdown = (event) => {
+            event.stopPropagation();
+            const isExpanded = supportContent.classList.contains('show');
+            if (isExpanded) {
+                supportContent.classList.remove('show');
+                supportBtn.classList.remove('open');
+            } else {
+                supportContent.classList.add('show');
+                supportBtn.classList.add('open');
+            }
+        };
+        
+        supportBtn.addEventListener('click', toggleDropdown);
+        
+        // 点击页面其他地方时，关闭下拉菜单（提升交互）
+        document.addEventListener('click', function(event) {
+            const target = event.target;
+            if (!supportBtn.contains(target) && !supportContent.contains(target)) {
+                if (supportContent.classList.contains('show')) {
+                    supportContent.classList.remove('show');
+                    supportBtn.classList.remove('open');
+                }
+            }
+        });
+        
+        // 避免点击下拉内容时冒泡导致关闭 (已经由上面判断排除，但加上以防万一)
+        supportContent.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    }
     
-    // 初始化页面: 渲染开关，渲染视频
+    // 初始化页面
     function init() {
         renderSwitches();
         renderVideoGrid();
+        initSponsorDropdown();
     }
     
-    // 如果用户后期自定义修改 TAG_LIST 或 VIDEOS_DATA 后刷新页面即可完全生效。
-    // 也可以提供控制台修改备注，但网页内无编辑能力，符合不可修改标签内容的要求。
     init();
 </script>
 </body>
