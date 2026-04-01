@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的原创视频作品集</title>
+    <link rel="stylesheet" type="text/css" href="./qc.css">
+    <style>
+    </style>
+</head>
+<body>
+    <h1 class="page-title">我的原创视频作品集</h1>
+
+    <!-- 固定标签展示区（不可修改） -->
+    <div class="fixed-tag-container" id="fixedTagBox"></div>
+
+    <!-- 屏蔽开关 -->
+    <div class="filter-container">
+        <span>开启屏蔽：</span>
+        <label class="switch">
+            <input type="checkbox" id="filterSwitch">
+            <span class="slider"></span>
+        </label>
+        <span id="filterText"></span>
+    </div>
+
+    <!-- 视频展示区 -->
+    <div class="video-grid" id="videoGrid"></div>
+
+    <!-- 视频播放弹窗（核心新增） -->
+    <div class="video-modal" id="videoModal">
+        <span class="close-btn" id="closeModal">&times;</span>
+        <div class="modal-content">
+            <video id="videoPlayer" controls autoplay></video>
+        </div>
+    </div>
+
+    <!-- 底部赞助区域 -->
+    <div class="donate-section">
+        <p class="donate-text">您的支持是我更新的最大动力</p>
+        <div class="donate-codes">
+            <img src="" alt="微信赞助" class="donate-img">
+            <img src="" alt="支付宝赞助" class="donate-img">
+        </div>
+    </div>
+
+    <script>
+        // ====================== 【你只需要修改这里的内容！】 ======================
+        // 1. 3个固定标签（你自己修改文字，网页上无法修改）
+        const fixedTags = ["原创教程", "干货分享", "日常创作"];
+        
+        // 2. 开关屏蔽的关键标签（开启后隐藏带这个标签的视频）
+        const blockTag = "日常创作";
+        
+        // 3. 你的视频数据（新增 videoUrl 外部视频链接，直接填你的链接即可）
+        const videoList = [
+            {
+                cover: "./img/VIDEO.png", // 视频封面图
+                title: "希儿践踏小人",
+                tags: ["原创教程", "干货分享"],
+                videoUrl: "https://downloads.fanbox.cc/files/post/11638641/x6sViwJSvq4HbFm2veVkapTX.mp4" // 外部视频直链（替换成你的）
+            },
+            {
+                cover: "./img/VIDEO.png", // 视频封面图
+                title: "希儿践踏小人",
+                tags: ["原创教程", "干货分享"],
+                videoUrl: "https://downloads.fanbox.cc/files/post/11638641/x6sViwJSvq4HbFm2veVkapTX.mp4" // 外部视频直链（替换成你的）
+            },
+            {
+                cover: "./img/VIDEO.png", // 视频封面图
+                title: "希儿践踏小人",
+                tags: ["原创教程", "干货分享"],
+                videoUrl: "https://downloads.fanbox.cc/files/post/11638641/x6sViwJSvq4HbFm2veVkapTX.mp4" // 外部视频直链（替换成你的）
+            },
+            {
+                cover: "./img/VIDEO.png", // 视频封面图
+                title: "希儿践踏小人",
+                tags: ["原创教程", "干货分享"],
+                videoUrl: "https://downloads.fanbox.cc/files/post/11638641/x6sViwJSvq4HbFm2veVkapTX.mp4" // 外部视频直链（替换成你的）
+            },
+            {
+                cover: "",
+                title: "视频作品2：日常创作vlog",
+                tags: ["日常创作"],
+                videoUrl: ""
+            },
+            {
+                cover: "",
+                title: "视频教程3：进阶技巧分享",
+                tags: ["原创教程", "干货分享"],
+                videoUrl: ""
+            }
+        ];
+        // ======================================================================
+
+        // 获取弹窗元素
+        const videoModal = document.getElementById("videoModal");
+        const videoPlayer = document.getElementById("videoPlayer");
+        const closeModal = document.getElementById("closeModal");
+
+        // 渲染固定标签
+        const fixedTagBox = document.getElementById("fixedTagBox");
+        fixedTags.forEach(tag => {
+            const div = document.createElement("div");
+            div.className = "fixed-tag";
+            div.textContent = tag;
+            fixedTagBox.appendChild(div);
+        });
+
+        // 渲染屏蔽标签文字
+        document.getElementById("filterText").textContent = `屏蔽【${blockTag}】标签视频`;
+
+        // 渲染视频函数
+        function renderVideos(isBlock) {
+            const grid = document.getElementById("videoGrid");
+            grid.innerHTML = "";
+            
+            videoList.forEach((video, index) => {
+                // 开关开启时，隐藏包含屏蔽标签的视频
+                if (isBlock && video.tags.includes(blockTag)) return;
+
+                const card = document.createElement("div");
+                card.className = "video-card";
+                // 点击卡片播放视频
+                card.onclick = () => playVideo(video.videoUrl);
+                
+                // 拼接标签HTML
+                let tagHtml = "";
+                video.tags.forEach(t => tagHtml += `<span class="video-tag">${t}</span>`);
+
+                card.innerHTML = `
+                    <img src="${video.cover}" class="video-cover" alt="视频封面">
+                    <div class="video-info">
+                        <h3 class="video-title">${video.title}</h3>
+                        <div class="video-tags">${tagHtml}</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // 播放视频函数（核心新增）
+        function playVideo(url) {
+            videoPlayer.src = url; // 设置外部视频链接
+            videoModal.style.display = "flex"; // 显示弹窗
+        }
+
+        // 关闭视频弹窗
+        closeModal.onclick = () => {
+            videoModal.style.display = "none";
+            videoPlayer.pause(); // 暂停视频
+            videoPlayer.src = ""; // 清空链接
+        };
+
+        // 点击弹窗空白处关闭
+        videoModal.onclick = (e) => {
+            if (e.target === videoModal) {
+                closeModal.click();
+            }
+        };
+
+        // 初始渲染视频
+        renderVideos(false);
+
+        // 开关监听
+        document.getElementById("filterSwitch").addEventListener("change", function(e) {
+            renderVideos(e.target.checked);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+ /* 全局基础样式 */
+ * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Microsoft YaHei", sans-serif;
+}
+body {
+    background-color: #f5f7fa;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 页面标题 */
+.page-title {
+    text-align: center;
+    margin: 20px 0;
+    color: #333;
+}
+
+/* 固定标签区域（不可修改） */
+.fixed-tag-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 15px 0;
+}
+.fixed-tag {
+    padding: 6px 12px;
+    background: #409eff;
+    color: white;
+    border-radius: 20px;
+    font-size: 14px;
+    /* 禁止选中/修改标签 */
+    user-select: none;
+    pointer-events: none;
+}
+
+/* 筛选开关区域 */
+.filter-container {
+    text-align: center;
+    margin: 20px 0;
+}
+/* 自定义开关样式 */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+    vertical-align: middle;
+    margin: 0 10px;
+}
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+input:checked + .slider {
+    background-color: #409eff;
+}
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* 视频网格布局 */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+}
+/* 视频卡片 */
+.video-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+    cursor: pointer; /* 鼠标悬停显示手型 */
+}
+.video-card:hover {
+    transform: translateY(-5px);
+}
+/* 视频封面 */
+.video-cover {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+}
+/* 视频信息 */
+.video-info {
+    padding: 12px;
+}
+.video-title {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 8px;
+}
+/* 视频标签 */
+.video-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.video-tag {
+    padding: 3px 8px;
+    background: #f0f2f5;
+    color: #666;
+    border-radius: 12px;
+    font-size: 12px;
+}
+
+/* 视频播放弹窗（核心新增） */
+.video-modal {
+    display: none; /* 默认隐藏 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+}
+.modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 800px;
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+}
+/* 关闭按钮 */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 1000;
+}
+/* 视频播放器 */
+#videoPlayer {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* 底部赞助区域 */
+.donate-section {
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px 0;
+    border-top: 1px solid #eee;
+}
+.donate-text {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+.donate-codes {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+.donate-img {
+    width: 80px; /* 二维码尺寸很小 */
+    height: 80px;
+    object-fit: contain;
+}
